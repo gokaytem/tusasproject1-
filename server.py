@@ -4,10 +4,7 @@ from flask import request, redirect, url_for
 
 import psycopg2 as dbapi2
 
-url = os.getenv("DATABASE_URL")
-    if url is None:
-        print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
-        sys.exit(1)
+url = os.environ['DATABASE_URL']
 
 app=Flask(__name__)
 
