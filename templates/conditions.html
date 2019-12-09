@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Conditions</title>
+  </head>
+  <body>
+    <h1 class="title">Conditions</h1>
+
+        <table class="table is-narrow is-striped is-hoverable">
+    
+        <tr>
+            <th>time</th>
+            <th>location</th>
+            <th>temprature</th>
+            <th>humidity</th>
+        </tr>
+    {% for i in range(0,len) %}
+        <tr>
+            <td>{{ rows[i][0] }}</td>
+            <td>{{ rows[i][1] }}</td>
+            <td>{{ rows[i][2] }}</td>
+            <td>{{ rows[i][3] }}</td>
+        </tr>
+    {%endfor%} 
+    </table>
+	<span class="navbar-item">
+          <a class="button" href="{{ url_for('conditions_add_page') }}">add</a>
+    </span>
+  </body>
+</html>
