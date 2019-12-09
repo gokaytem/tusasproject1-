@@ -67,8 +67,8 @@ def conditions_add_page():
 
 if __name__ == "__main__":
     
-    DATABASE_URL="postgres://postgres:1423@localhost:5432/tutorial"
+    # DATABASE_URL="postgres://postgres:1423@localhost:5432/tutorial"
     
-    initialize(DATABASE_URL)
+    # initialize(DATABASE_URL)
     
     app.run()
