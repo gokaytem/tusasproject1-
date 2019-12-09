@@ -36,6 +36,7 @@ def home_page():
     
 @app.route("/conditions")
 def conditions_page():
+    url="postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
     rows = query(url)
     return render_template("conditions.html", rows=sorted(rows), len=len(rows))
     
@@ -55,6 +56,7 @@ def conditions_add_page():
                       INSERT INTO conditions VALUES
                           (%s, '%s', %s, %s); ''' % (form_time, form_location, form_temperature, form_humidity)  ]
         
+        url="postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
         with dbapi2.connect(url) as connection:
             cursor = connection.cursor()
             for statement in STATEMENTS:
