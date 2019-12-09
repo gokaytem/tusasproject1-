@@ -36,7 +36,7 @@ def home_page():
     
 @app.route("/conditions")
 def conditions_page():
-    rows = query("postgres://postgres:1423@localhost:5432/tutorial")
+    rows = query("DATABASE_URL")
     return render_template("conditions.html", rows=sorted(rows), len=len(rows))
     
 @app.route("/conditions_add", methods=["GET", "POST"])
@@ -55,7 +55,7 @@ def conditions_add_page():
                       INSERT INTO conditions VALUES
                           (%s, '%s', %s, %s); ''' % (form_time, form_location, form_temperature, form_humidity)  ]
         
-        url= "postgres://postgres:1423@localhost:5432/tutorial"
+        url= "DATABASE_URL"
         with dbapi2.connect(url) as connection:
             cursor = connection.cursor()
             for statement in STATEMENTS:
@@ -67,8 +67,9 @@ def conditions_add_page():
 
 if __name__ == "__main__":
     
-    # DATABASE_URL="postgres://postgres:1423@localhost:5432/tutorial"
-    
-    # initialize(DATABASE_URL)
+    url = os.getenv("DATABASE_URL")
+    if url is None:
+        print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
+        sys.exit(1)
     
     app.run()
