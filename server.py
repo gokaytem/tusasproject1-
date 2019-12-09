@@ -4,9 +4,9 @@ from flask import request, redirect, url_for
 
 import psycopg2 as dbapi2
 
-url = os.environ['DATABASE_URL']
-
 app=Flask(__name__)
+
+DATABASE_URL = os.environ['DATABASE_URL']
 
 INIT_STATEMENTS = [
    '''CREATE TABLE IF NOT EXISTS conditions (
@@ -39,7 +39,7 @@ def home_page():
 @app.route("/conditions")
 def conditions_page():
     #url="postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
-    rows = query(url)
+    rows = query(DATABASE_URL)
     return render_template("conditions.html", rows=sorted(rows), len=len(rows))
     
 @app.route("/conditions_add", methods=["GET", "POST"])
@@ -59,7 +59,7 @@ def conditions_add_page():
                           (%s, '%s', %s, %s); ''' % (form_time, form_location, form_temperature, form_humidity)  ]
         
         #url="postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
-        with dbapi2.connect(url) as connection:
+        with dbapi2.connect(DATABASE_URL, sslmode='require') as connection:
             cursor = connection.cursor()
             for statement in STATEMENTS:
                 cursor.execute(statement)
