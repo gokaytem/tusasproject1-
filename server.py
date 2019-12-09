@@ -36,7 +36,7 @@ def home_page():
     
 @app.route("/conditions")
 def conditions_page():
-    rows = query("DATABASE_URL")
+    rows = query(url)
     return render_template("conditions.html", rows=sorted(rows), len=len(rows))
     
 @app.route("/conditions_add", methods=["GET", "POST"])
@@ -55,7 +55,6 @@ def conditions_add_page():
                       INSERT INTO conditions VALUES
                           (%s, '%s', %s, %s); ''' % (form_time, form_location, form_temperature, form_humidity)  ]
         
-        url= "DATABASE_URL"
         with dbapi2.connect(url) as connection:
             cursor = connection.cursor()
             for statement in STATEMENTS:
