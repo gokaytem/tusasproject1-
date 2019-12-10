@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <title>Conditions</title>
-  </head>
-  <body>
+{% extends "layout.html" %}
+{% block title %}Device 1{% endblock %}
+{% block content %}
     <h1 class="title">Conditions</h1>
 
         <table class="table is-narrow is-striped is-hoverable">
@@ -27,5 +23,4 @@
 	<span class="navbar-item">
           <a class="button" href="{{ url_for('conditions_add_page') }}">add</a>
     </span>
-  </body>
-</html>
+{% endblock %}

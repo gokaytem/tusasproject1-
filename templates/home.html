@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <title>Home</title>
-  </head>
-  <body>
-    <h1 class="title">WELCOME!</h1>
-	<span>
-         <a class="button" href="{{ url_for('conditions_page') }}">conditions</a>
-    </span>
-  </body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title is-capitalized">Welcome!</h1>
+        </div>
+      </div>
+    </section>
+{% endblock %}

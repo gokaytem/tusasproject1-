@@ -3,29 +3,37 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>My meetings - {% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"/>
     <link rel="stylesheet" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='mymeetings.css') }}"/>
-  </head>
+      </head>
   <body>
     <header>
-      <nav class="navbar" aria-label="main navigation">
-        <div class="navbar-brand">
-          <span class="navbar-item">
-            <a class="button is-primary" href="{{ url_for('home_page') }}">Home</a>
-          </span>
-          <span class="navbar-item">
-            <a class="button is-link" href="{{ url_for('meetings_page') }}">Meetings</a>
-          </span>
-          <span class="navbar-item">
-            <a class="button is-warning" href="{{ url_for('login_page') }}">Login</a>
-          </span>
-        </div>
-      </nav>
+      <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{{ url_for('home_page') }}">
+      <img src="/static/1200px-Tai_yenilogo.gif" width="90" height="28">
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+     
+	 <a class="navbar-item" href="{{ url_for('conditions_page') }}">
+        Device 1
+      </a>
+	  
+    </div>
+  </div>
+</nav>
     </header>
 
     <main>
@@ -37,8 +45,8 @@
     </main>
 
     <footer class="footer">
-      <div class="content">
-        <small>&copy; 2019, Gökay Temizkan-Hüveyscan Kamar</small>
+      <div class="content has-text-centered">
+        <small>&copy; 2019, TUSAŞ</small>
       </div>
     </footer>
   </body>
