@@ -117,7 +117,7 @@ def conditions_add_page():
  
 @app.route('/conditions_plot')
 def conditions_plot_page():
-    data = query("postgres://postgres:1423@localhost:5432/tutorial")
+    data = query(DATABASE_URL)
     x=[]
     y=[]
     for i in range(0,len(data)):
