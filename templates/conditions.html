@@ -20,7 +20,12 @@
         </tr>
     {%endfor%} 
     </table>
-	<span class="navbar-item">
-          <a class="button" href="{{ url_for('conditions_add_page') }}">add</a>
-    </span>
+	<div class="field is-grouped">
+        <span class="navbar-item">
+                <a class="button" href="{{ url_for('conditions_add_page') }}">Add</a>
+        </span>
+        <span class="navbar-item">
+                <a class="button" href="{{ url_for('conditions_plot_page') }}">Plot</a>
+        </span>
+    </div>
 {% endblock %}

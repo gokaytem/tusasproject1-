@@ -6,6 +6,17 @@ import os
 import sys
 import psycopg2 as dbapi2
 
+import numpy as np
+import matplotlib
+import random
+from threading import Lock
+lock = Lock()
+import mpld3
+from mpld3 import plugins
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+plt.ioff()
+
 app=Flask(__name__)
 
 DATABASE_URL = os.environ['DATABASE_URL']
@@ -33,6 +44,40 @@ def query(url):
         rows = cursor.fetchall()      
         cursor.close()
         return rows
+        
+def draw_fig(fig_type,x,y):
+    """Returns html equivalent of matplotlib figure
+    Parameters
+    ----------
+    fig_type: string, type of figure
+            one of following:
+                    * line
+                    * bar
+    Returns
+    --------
+    d3 representation of figure
+    """
+    #x=np.arange(0,4)
+    pie_fracs = [20, 30, 40, 10]
+    pie_labels = ["A", "B", "C", "D"]
+    
+    with lock:
+        fig, ax = plt.subplots()
+        if fig_type == "line":
+            ax.plot(x, y)
+        elif fig_type == "bar":
+            ax.bar(x, y)
+        elif fig_type == "pie":
+            ax.pie(pie_fracs, labels=pie_labels)
+        elif fig_type == "scatter":
+            ax.scatter(x, y)
+        elif fig_type == "hist":
+            ax.hist(y, 10, normed=1)
+        elif fig_type == "area":
+            ax.plot(x, y)
+            ax.fill_between(x, 0, y, alpha=0.2)
+
+    return mpld3.fig_to_html(fig,template_type='simple')
 
 @app.route("/")
 def home_page():
@@ -69,6 +114,17 @@ def conditions_add_page():
             cursor.close()
         
         return redirect(url_for("conditions_page"))
+ 
+@app.route('/conditions_plot')
+def conditions_plot_page():
+    data = query("postgres://postgres:1423@localhost:5432/tutorial")
+    x=[]
+    y=[]
+    for i in range(0,len(data)):
+        x.append(data[i][0])
+        y.append(data[i][2])
+    
+    return draw_fig("line",x,y)
 
 if __name__ == "__main__":
     
