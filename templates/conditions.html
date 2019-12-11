@@ -10,6 +10,7 @@
             <th>location</th>
             <th>temprature</th>
             <th>humidity</th>
+			<th></th>
         </tr>
     {% for i in range(0,len) %}
         <tr>
@@ -17,6 +18,13 @@
             <td>{{ rows[i][1] }}</td>
             <td>{{ rows[i][2] }}</td>
             <td>{{ rows[i][3] }}</td>
+			<td>
+                <a class="button is-danger" href="{{url_for('conditions_remove', time=rows[i][0]) }}">
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-trash"></i>
+                    </span>
+                </a>
+            </td>
         </tr>
     {%endfor%} 
     </table>

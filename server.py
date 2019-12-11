@@ -114,6 +114,22 @@ def conditions_add_page():
             cursor.close()
         
         return redirect(url_for("conditions_page"))
+        
+@app.route("/conditions_remove_<string:time>", methods=["GET", "POST"])
+def conditions_remove(time):
+        STATEMENTS = ['''
+                         DELETE FROM conditions
+                            WHERE (time='%s'); ''' % (time)]
+
+        url= DATABASE_URL
+        with dbapi2.connect(url) as connection:
+            cursor = connection.cursor()
+            for statement in STATEMENTS:
+                cursor.execute(statement)
+
+            cursor.close()
+
+        return redirect(url_for("conditions_page"))
  
 @app.route('/conditions_plot')
 def conditions_plot_page():
