@@ -38,13 +38,21 @@ def initialize(url):
         
         cursor.close()
         
-def query(url):
-    with dbapi2.connect(url) as connection:
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM conditions")
-        rows = cursor.fetchall()      
-        cursor.close()
-        return rows
+def query(url, scale):
+    if scale=="all":
+        with dbapi2.connect(url) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM conditions")
+            rows = cursor.fetchall()      
+            cursor.close()
+            return rows
+    elif scale=="daily":
+        with dbapi2.connect(url) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM conditions WHERE time >= CURRENT_DATE ")
+            rows = cursor.fetchall()      
+            cursor.close()
+            return rows
         
 def draw_fig(fig_type,x,y):
     """Returns html equivalent of matplotlib figure
@@ -67,6 +75,7 @@ def draw_fig(fig_type,x,y):
         if fig_type == "line":
             plt.xlabel("timestamp")
             plt.ylabel("temprature")
+            plt.ylim(20, 70)
             ax.plot(x, y)
         elif fig_type == "bar":
             ax.bar(x, y)
@@ -89,7 +98,7 @@ def home_page():
 @app.route("/conditions")
 def conditions_page():
     #url="postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
-    rows = query(DATABASE_URL)
+    rows = query(DATABASE_URL, "all")
     return render_template("conditions.html", rows=sorted(rows), len=len(rows))
     
 @app.route("/conditions_add", methods=["GET", "POST"])
@@ -134,22 +143,17 @@ def conditions_remove(time):
 
         return redirect(url_for("conditions_page"))
  
-@app.route('/conditions_plot')
-def conditions_plot_page():
-    data = query(DATABASE_URL)
+@app.route('/conditions_plot_<int:attribute>_<string:scale>')
+def conditions_plot_page(attribute, scale):
+    data = query(DATABASE_URL, scale)
     x=[]
     y=[]
     for i in range(0,len(data)):
         x.append(data[i][0])
-        y.append(data[i][2])
+        y.append(data[i][attribute])
     
     return draw_fig("line",x,y)
 
 if __name__ == "__main__":
-    
-    # url = os.getenv("DATABASE_URL")
-    # if url is None:
-        # print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
-        # sys.exit(1)
-    
+    app.config["DEBUG"] = True
     app.run()

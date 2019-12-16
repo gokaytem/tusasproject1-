@@ -1,42 +1,72 @@
 {% extends "layout.html" %}
 {% block title %}Device 1{% endblock %}
 {% block content %}
-    <h1 class="title">Conditions</h1>
+	<h1 class="title">Conditions</h1>
+	<div class="columns is-multiline">
+		<div class="column is-one-half">
+				<table class="table is-narrow is-striped is-hoverable">
+			
+				<tr>
+					<th>time</th>
+					<th>location</th>
+					<th>temprature</th>
+					<th>humidity</th>
+					<th></th>
+				</tr>
+			{% for i in range(0,len) %}
+				<tr>
+					<td>{{ rows[i][0] }}</td>
+					<td>{{ rows[i][1] }}</td>
+					<td>{{ rows[i][2] }}</td>
+					<td>{{ rows[i][3] }}</td>
+					<td>
+						<a class="button is-small is-danger" href="{{url_for('conditions_remove', time=rows[i][0]) }}">
+							<span class="icon is-small is-left">
+							  <i class="fa fa-trash"></i>
+							</span>
+						</a>
+					</td>
+				</tr>
+			{%endfor%} 
+			</table>
+			<span class="navbar-item">
+				<a class="button is-fullwidth" href="{{ url_for('conditions_add_page') }}">Add New</a>
+			</span>
+		</div>
+		
+		<div class="column is-one-quarter">
+			<p class="subtitle">Plot Temprature</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<!-- <a class="button plotbutton" onclick="showPlot(event, 'plot')" id="plotbutton">Plot</a> -->
+						<a class="button" onclick="popup_plot('{{ url_for('conditions_plot_page', attribute='2', scale='all' ) }}')">Plot All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" onclick="popup_plot('{{ url_for('conditions_plot_page', attribute='2', scale='daily' ) }}')">Plot Daily</a>
+				</span>
+			</div>
+		</div>
 
-        <table class="table is-narrow is-striped is-hoverable">
-    
-        <tr>
-            <th>time</th>
-            <th>location</th>
-            <th>temprature</th>
-            <th>humidity</th>
-			<th></th>
-        </tr>
-    {% for i in range(0,len) %}
-        <tr>
-            <td>{{ rows[i][0] }}</td>
-            <td>{{ rows[i][1] }}</td>
-            <td>{{ rows[i][2] }}</td>
-            <td>{{ rows[i][3] }}</td>
-			<td>
-                <a class="button is-danger" href="{{url_for('conditions_remove', time=rows[i][0]) }}">
-                    <span class="icon is-small is-left">
-                      <i class="fa fa-trash"></i>
-                    </span>
-                </a>
-            </td>
-        </tr>
-    {%endfor%} 
-    </table>
-	<div class="field is-grouped">
-        <span class="navbar-item">
-                <a class="button" href="{{ url_for('conditions_add_page') }}">Add</a>
-        </span>
-        <span class="navbar-item">
-				<!-- <a class="button plotbutton" onclick="showPlot(event, 'plot')" id="plotbutton">Plot</a> -->
-                <a class="button" href="{{ url_for('conditions_plot_page') }}">Plot</a>
-        </span>
-    </div>
+			<p class="subtitle">Plot Humidity</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<!-- <a class="button plotbutton" onclick="showPlot(event, 'plot')" id="plotbutton">Plot</a> -->
+						<a class="button" onclick="popup_plot('{{ url_for('conditions_plot_page', attribute='3', scale='all' ) }}')">Plot All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" onclick="popup_plot('{{ url_for('conditions_plot_page', attribute='3', scale='daily' ) }}')">Plot Daily</a>
+				</span>
+			</div>
+			</div>	
+		</div>
+		
+	</div>
+	
+	<script>
+		function popup_plot(url) {
+			window.open(url,'popUpWindow','height=600,width=700,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+				}
+	</script>
 	
 	<!-- <div id="plot" class="tabcontent">
 		<h3>Paris</h3>
