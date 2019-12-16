@@ -35,7 +35,7 @@
 		</div>
 
 		
-		<div class="column is-one-quarter">
+				<div class="column is-one-quarter">
 			<p class="subtitle">Plot Temperature</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
@@ -61,7 +61,22 @@
 						<a class="button" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='hourly' ) }}">Hourly</a>
 				</span>
 			</div>
+			
+			<p class="subtitle">Plot Together</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='together', scale='all' ) }}">All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='together', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='together', scale='hourly' ) }}">Hourly</a>
+				</span>
+			</div>
 		</div>
+		
+	</div>
 		
 	</div>
 {% endblock %}

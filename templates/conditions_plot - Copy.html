@@ -66,12 +66,14 @@
 		DIV = document.getElementById('plot');
 		var x = [];	
 		var y = [];
+	{% if together==0 %}
 		{% for i in range(0,len_data) %}
 		  x.push('{{ x[i] }}');
 		  y.push('{{ y[i] }}');
 		{%endfor%} 
-		var data = {x,y}
-		var trace = [data]
+	{%endif%}
+		var trace = {x,y}
+		var data = [data]
 		var layout = {
 			title: '',
 			xaxis: {
@@ -81,7 +83,8 @@
 				title: ''
 			}
 		};
-		Plotly.plot( DIV, trace, layout, {displaylogo: false} );
+		Plotly.plot( DIV, data, layout, {displaylogo: false} );
+
 		DIV.style.display = "block";
 	}
 	
@@ -90,11 +93,13 @@
 		var x = [];	
 		var y = [];
 		var z = [];
+	{% if together==1 %}
 		{% for i in range(0,len_data) %}
 		  x.push('{{ x[i] }}');
 		  y.push('{{ y[i] }}');
 		  z.push('{{ z[i] }}');
 		{%endfor%} 
+	{%endif%}
 		var trace1 = {x,y};
 		var trace2 = {x,z};
 		var data = [trace1, trace2];
