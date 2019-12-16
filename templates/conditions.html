@@ -33,7 +33,29 @@
                 <a class="button" href="{{ url_for('conditions_add_page') }}">Add</a>
         </span>
         <span class="navbar-item">
-                <a class="button" href="{{ url_for('conditions_plot_page') }}">Plot</a>
+				<button class="plotbutton" onclick="openCity(event, 'plot')">Plot</button>
+                <!-- <a class="button" href="{{ url_for('conditions_plot_page') }}">Plot</a> -->
         </span>
     </div>
+	
+	<div id="plot" class="tabcontent">
+		<h3>Paris</h3>
+		<p>Paris is the capital of France.</p> 
+	</div>
+	
+	<script>
+			function showPlot(evt, cityName) {
+			  var i, tabcontent, tablinks;
+			  tabcontent = document.getElementsByClassName("tabcontent");
+			  for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			  }
+			  tablinks = document.getElementsByClassName("plotbutton");
+			  for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			  }
+			  document.getElementById(cityName).style.display = "block";
+			  evt.currentTarget.className += " active";
+			}
+	</script>
 {% endblock %}

@@ -19,7 +19,8 @@ plt.ioff()
 
 app=Flask(__name__)
 
-DATABASE_URL = os.environ['DATABASE_URL']
+#DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = "postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
 
 INIT_STATEMENTS = [
    '''CREATE TABLE IF NOT EXISTS conditions (
@@ -64,6 +65,8 @@ def draw_fig(fig_type,x,y):
     with lock:
         fig, ax = plt.subplots()
         if fig_type == "line":
+            plt.xlabel("timestamp")
+            plt.ylabel("temprature")
             ax.plot(x, y)
         elif fig_type == "bar":
             ax.bar(x, y)
