@@ -33,6 +33,7 @@
 				<a class="button is-fullwidth" href="{{ url_for('conditions_add_page') }}">Add New</a>
 			</span>
 		</div>
+
 		
 		<div class="column is-one-quarter">
 			<p class="subtitle">Plot Temprature</p>
@@ -45,8 +46,7 @@
 						<a class="button" onclick="popup_plot('{{ url_for('conditions_plot_page', attribute='2', scale='daily' ) }}')">Plot Daily</a>
 				</span>
 			</div>
-		</div>
-
+		
 			<p class="subtitle">Plot Humidity</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
@@ -57,7 +57,6 @@
 						<a class="button" onclick="popup_plot('{{ url_for('conditions_plot_page', attribute='3', scale='daily' ) }}')">Plot Daily</a>
 				</span>
 			</div>
-			</div>	
 		</div>
 		
 	</div>
