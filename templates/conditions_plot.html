@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+{% block title %}Device 1{% endblock %}
+{% block content %}
+	<h1 class="title">Plot</h1>
+	<div class="columns is-multiline">
+		<div class="column is-one-half" id="plot" style="display:none;">	
+
+		</div>
+
+		
+		<div class="column is-one-quarter">
+			<p class="subtitle">Plot Temprature</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='all' ) }}">Plot All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='daily' ) }}">Plot Daily</a>
+				</span>
+			</div>
+		
+			<p class="subtitle">Plot Humidity</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='all' ) }}">Plot All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='daily' ) }}">Plot Daily</a>
+				</span>
+			</div>
+		</div>
+		
+	</div>
+	
+	<!-- <script>
+		function popup_plot(url) {
+			window.open(url,'popUpWindow','height=600,width=700,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+				}
+	</script> -->
+	
+
+		
+
+	
+	<script>
+	function showPlot() {
+		DIV = document.getElementById('plot');
+		var x = [];	
+		var y = [];
+		{% for i in range(0,len_data) %}
+		  x.push('{{ x[i] }}');
+		  y.push('{{ y[i] }}');
+		{%endfor%} 
+		var data = {x,y}
+		var trace = [data]
+		var layout = {
+			title: '',
+			xaxis: {
+				title: 'Time'
+			},
+			yaxis: {
+				title: ''
+			}
+		};
+		Plotly.plot( DIV, trace, layout );
+
+		DIV.style.display = "block";
+	}
+	
+	if ( {{ len_data }} > 0) {
+		showPlot()
+	}
+	</script>
+	
+	<!-- <div id="plot" class="tabcontent">
+		<h3>Paris</h3>
+		<p>Paris is the capital of France.</p> 
+	</div> -->
+	
+	<!-- <script>
+			function showPlot(evt, cityName) {
+			  var i, tabcontent, tablinks;
+			  tabcontent = document.getElementsByClassName("tabcontent");
+			  for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			  }
+			  tablinks = document.getElementsByClassName("plot plotbutton");
+			  for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			  }
+			  document.getElementById(cityName).style.display = "block";
+			  evt.currentTarget.className += " active";
+			}
+			$.get( "ajax/test.html", function( data ) {
+			  $( ".result" ).html( data );
+			  alert( "Load was performed." );
+			});
+			$(document).ready(function(){
+				$("#plotbutton").click(function(){
+					alert("Text: ");
+			 });
+	</script> -->
+{% endblock %}

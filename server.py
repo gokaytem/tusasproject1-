@@ -99,6 +99,7 @@ def home_page():
 def conditions_page():
     #url="postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
     rows = query(DATABASE_URL, "all")
+    
     return render_template("conditions.html", rows=sorted(rows), len=len(rows))
     
 @app.route("/conditions_add", methods=["GET", "POST"])
@@ -144,7 +145,7 @@ def conditions_remove(time):
         return redirect(url_for("conditions_page"))
  
 @app.route('/conditions_plot_<int:attribute>_<string:scale>')
-def conditions_plot_page(attribute, scale):
+def conditions_plot_page(attribute, scale):  
     data = query(DATABASE_URL, scale)
     x=[]
     y=[]
@@ -152,7 +153,7 @@ def conditions_plot_page(attribute, scale):
         x.append(data[i][0])
         y.append(data[i][attribute])
     
-    return draw_fig("line",x,y)
+    return render_template("conditions_plot.html", x=x, y=y, len_data=len(data))
 
 if __name__ == "__main__":
     app.config["DEBUG"] = True
