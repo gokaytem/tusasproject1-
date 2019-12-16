@@ -39,20 +39,26 @@
 			<p class="subtitle">Plot Temprature</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='all' ) }}">Plot All</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='all' ) }}">All</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='daily' ) }}">Plot Daily</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='hourly' ) }}">Hourly</a>
 				</span>
 			</div>
 		
 			<p class="subtitle">Plot Humidity</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='all' ) }}">Plot All</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='all' ) }}">All</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='daily' ) }}">Plot Daily</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='hourly' ) }}">Hourly</a>
 				</span>
 			</div>
 		</div>

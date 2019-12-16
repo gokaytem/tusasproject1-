@@ -53,6 +53,13 @@ def query(url, scale):
             rows = cursor.fetchall()      
             cursor.close()
             return rows
+    elif scale=="hourly":
+        with dbapi2.connect(url) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM conditions WHERE time >= date_trunc('hour', current_timestamp) ")
+            rows = cursor.fetchall()      
+            cursor.close()
+            return rows
         
 def draw_fig(fig_type,x,y):
     """Returns html equivalent of matplotlib figure
