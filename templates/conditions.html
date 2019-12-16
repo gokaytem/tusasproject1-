@@ -9,7 +9,7 @@
 				<tr>
 					<th>time</th>
 					<th>location</th>
-					<th>temprature</th>
+					<th>temperature</th>
 					<th>humidity</th>
 					<th></th>
 				</tr>
@@ -36,29 +36,29 @@
 
 		
 		<div class="column is-one-quarter">
-			<p class="subtitle">Plot Temprature</p>
+			<p class="subtitle">Plot Temperature</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='all' ) }}">All</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='all' ) }}">All</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='daily' ) }}">Today</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='daily' ) }}">Today</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='2', scale='hourly' ) }}">Hourly</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='hourly' ) }}">Hourly</a>
 				</span>
 			</div>
 		
 			<p class="subtitle">Plot Humidity</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='all' ) }}">All</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='all' ) }}">All</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='daily' ) }}">Today</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='daily' ) }}">Today</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='3', scale='hourly' ) }}">Hourly</a>
+						<a class="button" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='hourly' ) }}">Hourly</a>
 				</span>
 			</div>
 		</div>
