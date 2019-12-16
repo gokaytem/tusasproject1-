@@ -5,4 +5,3 @@ numpy
 matplotlib
 Lock
 mpld3
-plotly==4.4.1
