@@ -74,10 +74,12 @@
 		DIV = document.getElementById('plot');
 		var x = [];	
 		var y = [];
-		{% for i in range(0,len_data) %}
+		{% if together == 0 %}
+			{% for i in range(0,len_data) %}
 		  x.push('{{ x[i] }}');
 		  y.push('{{ y[i] }}');
-		{%endfor%} 
+			{%endfor%} 
+		{%endif%}
 		var data = {x,y}
 		var trace = [data]
 		var layout = {
@@ -98,13 +100,25 @@
 		var x = [];	
 		var y = [];
 		var z = [];
-		{% for i in range(0,len_data) %}
+		{% if together == 1 %}
+			{% for i in range(0,len_data) %}
 		  x.push('{{ x[i] }}');
 		  y.push('{{ y[i] }}');
 		  z.push('{{ z[i] }}');
-		{%endfor%} 
-		var trace1 = {x,y};
-		var trace2 = {x,z};
+			{%endfor%}
+		{%endif%}
+		
+		
+		var i;
+		for (i = 0; i < x.length; i++) {
+		  console.log(x[i]);
+		  console.log(y[i]);
+		  console.log(z[i]);
+		  console.log(' ');
+		}
+		
+		var trace1 = {x:x ,y:y, name: 'Temperature'};
+		var trace2 = {x:x ,y:z, name: 'Humidity'};
 		var data = [trace1, trace2];
 		
 		var layout = {
