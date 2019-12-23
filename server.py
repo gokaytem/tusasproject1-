@@ -152,4 +152,4 @@ def conditions_plot_page(attribute, scale):
 
 if __name__ == "__main__":
     app.config["DEBUG"] = True
-    app.run(port=5000)
+    app.run(port=5001)
