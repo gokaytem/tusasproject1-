@@ -11,16 +11,6 @@
 	<link rel="stylesheet"
           href="{{ url_for('static', filename='project1.css') }}"/>
 	<script src="/static/plotly-latest.min.js"></script>
-	<!-- <style>
-		.tabcontent {
-		  display: none;
-		  padding: 6px 12px;
-		}
-
-		body {color: blue;}
-	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-	</script> -->
       </head>
   <body>
     <header>
@@ -40,7 +30,7 @@
   <div class="navbar-menu">
 	  
     <div class="navbar-start">
-	 <a class="navbar-item" href="{{ url_for('conditions_page') }}">Device 1</a>
+	 <a class="navbar-item" id="device1" href="{{ url_for('conditions_page') }}">Device 1</a>
     </div>
 	  
   </div>
