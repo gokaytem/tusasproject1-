@@ -122,7 +122,7 @@ def conditions_plot_page(attribute, scale):
             y.append(data[i][attribute_i1])
             z.append(data[i][attribute_i2])
             
-            return render_template("conditions_plot.html", x=x, y=y, z=z, together=together, len_data=len(data))
+        return render_template("conditions_plot.html", x=x, y=y, z=z, together=together, len_data=len(data))
         
     for i in range(0,len(data)):
         x.append(data[i][0])
