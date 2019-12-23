@@ -94,7 +94,10 @@
 	<script>
 	
 		$(document).ready( function () {
-		$('#conditions_table').DataTable();
+		$('#conditions_table').DataTable( {
+			paging: false,
+    		scrollY: 400
+			} );
 		} );
 		
 		document.getElementById("device1").className+= " is-active";
