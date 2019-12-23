@@ -3,7 +3,7 @@
 {% block content %}
 	<h1 class="title">Plot</h1>
 	<div class="columns is-multiline">
-		<div class="column is-one-half" id="plot" style="display:none;">	
+		<div class="column" id="plot" style="display:none;">	
 
 		</div>
 
@@ -126,6 +126,9 @@
 		var data = [trace1, trace2];
 		
 		var layout = {
+			autosize: false,
+			width: 500,
+			height: 500,
 			title: '',
 			xaxis: {
 				title: 'Time'
