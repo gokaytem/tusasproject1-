@@ -8,7 +8,7 @@
 		</div>
 
 		
-		<div class="column is-one-quarter">
+		<div class="column is-one-quarter" id="plotnav">
 		
 			<div class="field">
 				<label class="switch">
@@ -20,39 +20,39 @@
 			<p class="subtitle">Plot Temperature</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='all' ) }}">All</a>
+						<a class="button" id="temperatureall" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='all' ) }}">All</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='daily' ) }}">Today</a>
+						<a class="button" id="temperaturedaily" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='daily' ) }}">Today</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='hourly' ) }}">Hourly</a>
+						<a class="button" id="temperaturehourly" href="{{ url_for('conditions_plot_page', attribute='temperature', scale='hourly' ) }}">Hourly</a>
 				</span>
 			</div>
 				
 			<p class="subtitle">Plot Humidity</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='all' ) }}">All</a>
+						<a class="button" id="humidityall" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='all' ) }}">All</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='daily' ) }}">Today</a>
+						<a class="button" id="humiditydaily" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='daily' ) }}">Today</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='hourly' ) }}">Hourly</a>
+						<a class="button" id="humidityhourly" href="{{ url_for('conditions_plot_page', attribute='humidity', scale='hourly' ) }}">Hourly</a>
 				</span>
 			</div>
 			
 			<p class="subtitle">Plot Together</p>
 			<div class="field is-grouped">
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='together', scale='all' ) }}">All</a>
+						<a class="button" id="togetherall" href="{{ url_for('conditions_plot_page', attribute='together', scale='all' ) }}">All</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='together', scale='daily' ) }}">Today</a>
+						<a class="button" id="togetherdaily" href="{{ url_for('conditions_plot_page', attribute='together', scale='daily' ) }}">Today</a>
 				</span>
 				<span class="navbar-item">
-						<a class="button" href="{{ url_for('conditions_plot_page', attribute='together', scale='hourly' ) }}">Hourly</a>
+						<a class="button" id="togetherhourly" href="{{ url_for('conditions_plot_page', attribute='together', scale='hourly' ) }}">Hourly</a>
 				</span>
 			</div>
 		</div>
@@ -70,6 +70,9 @@
 
 	
 	<script>
+	
+	document.getElementById("{{attribute}}{{scale}}").className+= " is-active";
+
 	function showPlot() {
 		DIV = document.getElementById('plot');
 		var x = [];	
@@ -161,6 +164,8 @@
 	}
 
 	window.onload=checkReloading;
+	
+	
 	</script>
 	
 	<!-- <div id="plot" class="tabcontent">

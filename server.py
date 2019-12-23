@@ -122,13 +122,13 @@ def conditions_plot_page(attribute, scale):
             y.append(data[i][attribute_i1])
             z.append(data[i][attribute_i2])
             
-        return render_template("conditions_plot.html", x=x, y=y, z=z, together=together, len_data=len(data))
+        return render_template("conditions_plot.html", x=x, y=y, z=z, together=together, len_data=len(data), attribute=attribute, scale=scale)
         
     for i in range(0,len(data)):
         x.append(data[i][0])
         y.append(data[i][attribute_i])
     
-    return render_template("conditions_plot.html", x=x, y=y, z=z, together=together, len_data=len(data))
+    return render_template("conditions_plot.html", x=x, y=y, z=z, together=together, len_data=len(data), attribute=attribute, scale=scale)
 
 if __name__ == "__main__":
     app.config["DEBUG"] = True
