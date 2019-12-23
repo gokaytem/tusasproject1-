@@ -87,29 +87,24 @@ def conditions_add_page():
         return redirect(url_for("conditions_page"))
         
 @app.route("/conditions_add_<int:temperature>_<int:humidity>", methods=["GET", "POST"])
-def conditions_add_page(temperature, humidity):
-    if request.method == "GET":
-        return render_template(
-            "conditions_add.html"
-        )
-    else:
-        form_time = "NOW()"
-        form_location = "ertan"
-        form_temperature = temperature
-        form_humidity = humidity
-        
-        STATEMENTS = [ '''
-                      INSERT INTO conditions VALUES
-                          (%s, '%s', %s, %s); ''' % (form_time, form_location, form_temperature, form_humidity)  ]
-        
-        with dbapi2.connect(DATABASE_URL, sslmode='require') as connection:
-            cursor = connection.cursor()
-            for statement in STATEMENTS:
-                cursor.execute(statement)
-        
-            cursor.close()
-        
-        return redirect(url_for("conditions_page"))
+def conditions_add_direct_page(temperature, humidity):
+    form_time = "NOW()"
+    form_location = "ertan"
+    form_temperature = temperature
+    form_humidity = humidity
+    
+    STATEMENTS = [ '''
+                  INSERT INTO conditions VALUES
+                      (%s, '%s', %s, %s); ''' % (form_time, form_location, form_temperature, form_humidity)  ]
+    
+    with dbapi2.connect(DATABASE_URL, sslmode='require') as connection:
+        cursor = connection.cursor()
+        for statement in STATEMENTS:
+            cursor.execute(statement)
+    
+        cursor.close()
+    
+    return redirect(url_for("conditions_page"))
         
 @app.route("/conditions_remove_<string:time>", methods=["GET", "POST"])
 def conditions_remove(time):
