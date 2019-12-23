@@ -4,8 +4,8 @@
 	<h1 class="title">Conditions</h1>
 	<div class="columns is-multiline">
 		<div class="column is-one-half">
-				<table class="table is-narrow is-striped is-hoverable" id="conditions_table">
-				<thead>
+				<table class="table is-narrow is-striped is-hoverable">
+			
 				<tr>
 					<th>time</th>
 					<th>location</th>
@@ -13,8 +13,6 @@
 					<th>humidity</th>
 					<th></th>
 				</tr>
-				</thead>
-				<tbody>
 			{% for i in range(0,len) %}
 				<tr>
 					<td>{{ rows[i][0] }}</td>
@@ -30,7 +28,6 @@
 					</td>
 				</tr>
 			{%endfor%} 
-			</tbody>
 			</table>
 			<span class="navbar-item">
 				<a class="button is-fullwidth" href="{{ url_for('conditions_add_page') }}">Add New</a>
@@ -92,22 +89,15 @@
 	</div>
 	
 	<script>
-	
-		$(document).ready( function () {
-		$('#conditions_table').DataTable();
-		} );
-		
 		document.getElementById("device1").className+= " is-active";
 		
 		var reloading;
-
 		function checkReloading() {
 			if (window.location.hash=="#autoreload") {
 				reloading=setTimeout("window.location.reload();", 3*1000);
 				document.getElementById("reloadCB").checked=true;
 			}
 		}
-
 		function toggleAutoRefresh(cb) {
 			if (cb.checked) {
 				window.location.replace("#autoreload");
@@ -117,7 +107,6 @@
 				clearTimeout(reloading);
 			}
 		}
-
 		window.onload=checkReloading;
 	</script>
 {% endblock %}
