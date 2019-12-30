@@ -13,7 +13,7 @@ INIT_STATEMENTS = [
       );
       
       CREATE TABLE IF NOT EXISTS noise_sensor (
-        time        TIMESTAMPTZ       NOT NULL,
+        time        TIMESTAMP         NOT NULL,
         sound       DOUBLE PRECISION  NULL
       );''']
 
