@@ -204,7 +204,7 @@ def noise_add_page():
         
         return redirect(url_for("noise_page"))
         
-@app.route("/noise_add_sound=<int:sound>", methods=["GET", "POST"])
+@app.route("/noise_add_sound=<float:sound>", methods=["GET", "POST"])
 def noise_add_direct_page(sound):
     form_time = "NOW()"
     form_sound = sound
