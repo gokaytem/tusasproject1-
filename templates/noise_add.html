@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Noise Sensor{% endblock %}
+{% block content %}
+ <h1 class="title">New</h1>
+
+    <form action="" method="post" name="noise_add">
+	
+	  <div class="field">
+        <label for="sound" class="label">sound (dB)</label>
+        <div class="control">
+          <input type="number" name="sound" class="input"/>
+        </div>
+      </div>
+      
+
+      <div>
+        <div class="control">
+          <button class="button">Add</button>
+        </div>
+      </div>
+    </form>
+	
+	<script>document.getElementById("noise").className+= " is-active";</script>
+{% endblock %}

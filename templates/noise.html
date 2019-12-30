@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% block title %}Noise Sensor{% endblock %}
+{% block content %}
+	<h1 class="title">Noise Sensor</h1>
+	<div class="columns is-multiline">
+		<div class="column is-one-half">
+				<table class="table is-narrow is-striped is-hoverable" id="noise_table">
+				<thead>
+				<tr>
+					<th>time</th>
+					<th>sound (dB)</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+			{% for i in range(0,len) %}
+				<tr>
+					<td>{{ rows[i][0] }}</td>
+					<td>{{ rows[i][1] }}</td>
+					<td>
+						<a class="button is-small is-danger" href="{{url_for('noise_remove', time=rows[i][0]) }}">
+							<span class="icon is-small is-left">
+							  <i class="fa fa-trash"></i>
+							</span>
+						</a>
+					</td>
+				</tr>
+			{%endfor%} 
+			</tbody>
+			</table>
+			<span class="navbar-item">
+				<a class="button is-fullwidth" href="{{ url_for('noise_add_page') }}">Add New</a>
+			</span>
+		</div>
+
+		
+			<div class="column is-one-quarter">
+			
+			<div class="field">
+				<label class="switch">
+				  <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">
+				  <span class="slider">Auto Reload</span>
+				</label>
+			</div>
+			
+			<p class="subtitle">Plot Sound</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='sound', scale='all' ) }}">All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='sound', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='sound', scale='hourly' ) }}">Hourly</a>
+				</span>
+			</div>
+		
+			<!-- <p class="subtitle">Plot Humidity</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='humidity', scale='all' ) }}">All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='humidity', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='humidity', scale='hourly' ) }}">Hourly</a>
+				</span>
+			</div>
+			
+			<p class="subtitle">Plot Together</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='together', scale='all' ) }}">All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='together', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" href="{{ url_for('noise_plot_page', attribute='together', scale='hourly' ) }}">Hourly</a>
+				</span>
+			</div> -->
+		</div>
+		
+	</div>
+		
+	</div>
+	
+	<script>
+	
+		$(document).ready( function () {
+		$('#noise_table').DataTable( {
+			paging: false,
+    		scrollY: 400
+			} );
+		} );
+		
+		document.getElementById("noise").className+= " is-active";
+		
+		var reloading;
+
+		function checkReloading() {
+			if (window.location.hash=="#autoreload") {
+				reloading=setTimeout("window.location.reload();", 15*1000);
+				document.getElementById("reloadCB").checked=true;
+			}
+		}
+
+		function toggleAutoRefresh(cb) {
+			if (cb.checked) {
+				window.location.replace("#autoreload");
+				reloading=setTimeout("window.location.reload();", 15*1000);
+			} else {
+				window.location.replace("#");
+				clearTimeout(reloading);
+			}
+		}
+
+		window.onload=checkReloading;
+	</script>
+{% endblock %}

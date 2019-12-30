@@ -27,7 +27,7 @@ def initialize(url):
         
         cursor.close()
         
-def query(url, scale):
+def query_device1(url, scale):
     if scale=="all":
         with dbapi2.connect(url) as connection:
             cursor = connection.cursor()
@@ -49,6 +49,29 @@ def query(url, scale):
             rows = cursor.fetchall()      
             cursor.close()
             return rows
+            
+def query_noise(url, scale):
+    if scale=="all":
+        with dbapi2.connect(url) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM noise_sensor")
+            rows = cursor.fetchall()      
+            cursor.close()
+            return rows
+    elif scale=="daily":
+        with dbapi2.connect(url) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM noise_sensor WHERE time >= CURRENT_DATE ")
+            rows = cursor.fetchall()      
+            cursor.close()
+            return rows
+    elif scale=="hourly":
+        with dbapi2.connect(url) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM noise_sensor WHERE time >= date_trunc('hour', current_timestamp) ")
+            rows = cursor.fetchall()      
+            cursor.close()
+            return rows
         
 @app.route("/")
 def home_page():
@@ -57,7 +80,7 @@ def home_page():
 @app.route("/conditions")
 def conditions_page():
     #url="postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
-    rows = query(DATABASE_URL, "all")
+    rows = query_device1(DATABASE_URL, "all")
     
     return render_template("conditions.html", rows=sorted(rows), len=len(rows))
     
@@ -124,7 +147,7 @@ def conditions_remove(time):
  
 @app.route('/conditions_plot_<string:attribute>_<string:scale>')
 def conditions_plot_page(attribute, scale):
-    data = query(DATABASE_URL, scale)
+    data = query_device1(DATABASE_URL, scale)
     x=[]
     y=[]
     z=[]
@@ -150,6 +173,86 @@ def conditions_plot_page(attribute, scale):
     
     return render_template("conditions_plot.html", x=x, y=y, z=z, together=together, len_data=len(data), attribute=attribute, scale=scale)
 
+###############NOISE_SENSOR###############
+@app.route("/noise")
+def noise_page():
+    #url="postgres://yhhyfzzbazeqdp:e01c510431281ed149e9aaede179c6a8f02317a6148695c8779bf911d4c8fb9f@ec2-174-129-255-10.compute-1.amazonaws.com:5432/d5esp0qjvi5ic3"
+    rows = query_noise(DATABASE_URL, "all")
+    
+    return render_template("noise.html", rows=sorted(rows), len=len(rows))
+    
+@app.route("/noise_add", methods=["GET", "POST"])
+def noise_add_page():
+    if request.method == "GET":
+        return render_template(
+            "noise_add.html"
+        )
+    else:
+        form_time = "NOW()"
+        form_sound = request.form["sound"]
+        
+        STATEMENTS = [ '''
+                      INSERT INTO noise_sensor VALUES
+                          (%s, %s); ''' % (form_time, form_sound)  ]
+        
+        with dbapi2.connect(DATABASE_URL, sslmode='require') as connection:
+            cursor = connection.cursor()
+            for statement in STATEMENTS:
+                cursor.execute(statement)
+        
+            cursor.close()
+        
+        return redirect(url_for("noise_page"))
+        
+@app.route("/noise_add_sound=<int:sound>", methods=["GET", "POST"])
+def noise_add_direct_page(sound):
+    form_time = "NOW()"
+    form_sound = sound
+
+    STATEMENTS = [ '''
+                  INSERT INTO noise_sensor VALUES
+                      (%s, %s); ''' % (form_time, form_sound)  ]
+    
+    with dbapi2.connect(DATABASE_URL, sslmode='require') as connection:
+        cursor = connection.cursor()
+        for statement in STATEMENTS:
+            cursor.execute(statement)
+    
+        cursor.close()
+    
+    return redirect(url_for("noise_page"))
+        
+@app.route("/noise_remove_<string:time>", methods=["GET", "POST"])
+def noise_remove(time):
+        STATEMENTS = ['''
+                         DELETE FROM noise_sensor
+                            WHERE (time='%s'); ''' % (time)]
+
+        url= DATABASE_URL
+        with dbapi2.connect(url) as connection:
+            cursor = connection.cursor()
+            for statement in STATEMENTS:
+                cursor.execute(statement)
+
+            cursor.close()
+
+        return redirect(url_for("noise_page"))
+ 
+@app.route('/noise_plot_<string:attribute>_<string:scale>')
+def noise_plot_page(attribute, scale):
+    data = query_noise(DATABASE_URL, scale)
+    x=[]
+    y=[]
+    if attribute=='sound':
+        attribute_i=1
+        
+    for i in range(0,len(data)):
+        x.append(data[i][0])
+        y.append(data[i][attribute_i])
+    
+    return render_template("noise_plot.html", x=x, y=y, len_data=len(data), attribute=attribute, scale=scale)
+
+###############NOISE_SENSOR###############
 if __name__ == "__main__":
     app.config["DEBUG"] = True
     app.run(port=5001)

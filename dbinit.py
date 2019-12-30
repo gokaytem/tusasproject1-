@@ -10,6 +10,11 @@ INIT_STATEMENTS = [
         location    TEXT              NOT NULL,
         temperature DOUBLE PRECISION  NULL,
         humidity    DOUBLE PRECISION  NULL
+      );
+      
+      CREATE TABLE IF NOT EXISTS noise_sensor (
+        time        TIMESTAMPTZ       NOT NULL,
+        sound       DOUBLE PRECISION  NULL
       );''']
 
 

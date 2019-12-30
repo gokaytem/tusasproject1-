@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+{% block title %}Noise Sensor{% endblock %}
+{% block content %}
+	<h1 class="title">Plot</h1>
+	<div class="columns is-multiline">
+		<div class="column" id="plot" style="display:none;">	
+
+		</div>
+
+		
+		<div class="column is-one-quarter" id="plotnav">
+		
+			<div class="field">
+				<label class="switch">
+				  <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">
+				  <span class="slider">Auto Reload</span>
+				</label>
+			</div>
+			
+			<p class="subtitle">Plot Temperature</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" id="soundall" href="{{ url_for('noise_plot_page', attribute='sound', scale='all' ) }}">All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" id="sounddaily" href="{{ url_for('noise_plot_page', attribute='sound', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" id="soundhourly" href="{{ url_for('noise_plot_page', attribute='sound', scale='hourly' ) }}">Hourly</a>
+				</span>
+			</div>
+				
+			<!-- <p class="subtitle">Plot Humidity</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" id="humidityall" href="{{ url_for('noise_plot_page', attribute='humidity', scale='all' ) }}">All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" id="humiditydaily" href="{{ url_for('noise_plot_page', attribute='humidity', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" id="humidityhourly" href="{{ url_for('noise_plot_page', attribute='humidity', scale='hourly' ) }}">Hourly</a>
+				</span>
+			</div>
+			
+			<p class="subtitle">Plot Together</p>
+			<div class="field is-grouped">
+				<span class="navbar-item">
+						<a class="button" id="togetherall" href="{{ url_for('noise_plot_page', attribute='together', scale='all' ) }}">All</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" id="togetherdaily" href="{{ url_for('noise_plot_page', attribute='together', scale='daily' ) }}">Today</a>
+				</span>
+				<span class="navbar-item">
+						<a class="button" id="togetherhourly" href="{{ url_for('noise_plot_page', attribute='together', scale='hourly' ) }}">Hourly</a>
+				</span>
+			</div> -->
+		</div>
+		
+	</div>
+	
+	<!-- <script>
+		function popup_plot(url) {
+			window.open(url,'popUpWindow','height=600,width=700,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+				}
+	</script> -->
+	
+
+		
+
+	
+	<script>
+	
+	document.getElementById("{{attribute}}{{scale}}").className+= " is-active";
+	document.getElementById("noise").className+= " is-active";
+
+	function showPlot() {
+		DIV = document.getElementById('plot');
+		var x = [];	
+		var y = [];
+		{% for i in range(0,len_data) %}
+		  x.push('{{ x[i] }}');
+		  y.push('{{ y[i] }}');
+		{%endfor%} 
+		var data = {x,y}
+		var trace = [data]
+		var layout = {
+			title: '',
+			xaxis: {
+				title: 'Time'
+			},
+			yaxis: {
+				title: 'Sound (dB)'
+			}
+		};
+		Plotly.plot( DIV, trace, layout, {displaylogo: false} );
+		DIV.style.display = "block";
+	}
+	
+	showPlot()
+	
+	var reloading;
+
+	function checkReloading() {
+		if (window.location.hash=="#autoreload") {
+			reloading=setTimeout("window.location.reload();", 15*1000);
+			document.getElementById("reloadCB").checked=true;
+		}
+	}
+
+	function toggleAutoRefresh(cb) {
+		if (cb.checked) {
+			window.location.replace("#autoreload");
+			reloading=setTimeout("window.location.reload();", 15*1000);
+		} else {
+			window.location.replace("#");
+			clearTimeout(reloading);
+		}
+	}
+
+	window.onload=checkReloading;
+	
+	
+	</script>
+	
+	<!-- <div id="plot" class="tabcontent">
+		<h3>Paris</h3>
+		<p>Paris is the capital of France.</p> 
+	</div> -->
+	
+	<!-- <script>
+			function showPlot(evt, cityName) {
+			  var i, tabcontent, tablinks;
+			  tabcontent = document.getElementsByClassName("tabcontent");
+			  for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			  }
+			  tablinks = document.getElementsByClassName("plot plotbutton");
+			  for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			  }
+			  document.getElementById(cityName).style.display = "block";
+			  evt.currentTarget.className += " active";
+			}
+			$.get( "ajax/test.html", function( data ) {
+			  $( ".result" ).html( data );
+			  alert( "Load was performed." );
+			});
+			$(document).ready(function(){
+				$("#plotbutton").click(function(){
+					alert("Text: ");
+			 });
+	</script> -->
+{% endblock %}
